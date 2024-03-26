@@ -12,9 +12,9 @@ public class GameMgr : MonoBehaviour
     public GameObject Prolog;
 
     public GameObject ContinueMenu;
-    //public GameObject Continue;
+    public GameObject TimeLineWin;
 
-    //public GameObject DummyBtn;
+
 
     void Start()
     {
@@ -78,6 +78,11 @@ public class GameMgr : MonoBehaviour
     {
         ContinueMenu.SetActive(true);
         memuWin.SetActive(false);
+    }
+
+    public void TimeLineOff()
+    {
+        TimeLineWin.SetActive(false);
     }
 
 }

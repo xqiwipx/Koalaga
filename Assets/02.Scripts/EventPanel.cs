@@ -12,7 +12,9 @@ public class EventPanel : MonoBehaviour
     public GameObject EventImg2;
     public GameObject EventImg3;
 
-    int ImgNum = 4;
+    //public bool AutoTrick;
+
+    int ImgNum = 5;
     void Start()
     {
         EventImg0.SetActive(true);
@@ -27,14 +29,17 @@ public class EventPanel : MonoBehaviour
         {
             ImgEvent();
         }
+
+                
     }
 
     public void ImgEvent()
     {
+        ImgNum--;
         switch (ImgNum)
         {
             case 0:
-                NextScene();
+                PrologNextScene();
                 break;
 
             case 1:
@@ -53,14 +58,24 @@ public class EventPanel : MonoBehaviour
                 EventImg0.SetActive(false);
                 break;
         }
-        ImgNum--;
+        
 
     }
 
-    public void NextScene()
+    public void PrologNextScene()
     {
         //이 곳에 이어질 씬을 넣는다.
-        SceneManager.LoadScene(1);
+        if (SceneManager.GetActiveScene().name == "00_Title")
+        {
+            //타이틀에서 이어지는 씬은 첫 출근이다.
+            SceneManager.LoadScene(1);
+        }
+
+    }
+
+    public void AutoTrickOff()
+    {
+        //AutoTrick = false;
     }
 
 }
