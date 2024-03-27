@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameMgr : MonoBehaviour
 {
+    // 타이틀 메뉴 및 게임윈도우 관리
+
+    public GameObject TitleWin;
+
     public GameObject Menubtn;
     public GameObject memuWin;
 
@@ -13,22 +17,28 @@ public class GameMgr : MonoBehaviour
 
     public GameObject ContinueMenu;
     public GameObject TimeLineWin;
+    public GameObject OptionWin;
+    public GameObject MapWin;
 
 
 
-    void Start()
+    void Start() //타이틀씬은 여기서 편집한다.
     {
-        if (SceneManager.GetActiveScene().name == "00_Title")
+        if (SceneManager.GetActiveScene().name == "00_Main")
         {
-            //타이틀씬 시작하기 빼고 다 끄기
+            //타이틀창 시작하기 빼고 다 끄기
+            
+            TitleWin.SetActive(true);
             Menubtn.SetActive(true);
             memuWin.SetActive(false);
             StartMenu.SetActive(false);
             Prolog.SetActive(false);
             ContinueMenu.SetActive(false);
-
+            TimeLineWin.SetActive(false);
+            OptionWin.SetActive(false);
+            MapWin.SetActive(false);
         }
-        
+
     }
 
     void Update()
@@ -55,12 +65,21 @@ public class GameMgr : MonoBehaviour
 
     public void OnClickStartBtn()
     {
-        SceneManager.LoadScene(1); //첫 출근
+        //SceneManager.LoadScene(1); //첫 출근
+        TitleWin.SetActive(false);
+        PrologOff();
+    }
+
+    public void PrologOff()
+    {
+        Prolog.SetActive(false);
     }
 
     public void OnClickTitle()
     {
+        //TitleWin.SetActive(true);
         SceneManager.LoadScene(0); //타이틀
+
     }
 
     public void Startmenu() //시작하기 메뉴
@@ -80,9 +99,38 @@ public class GameMgr : MonoBehaviour
         memuWin.SetActive(false);
     }
 
+    //근무일지
     public void TimeLineOff()
     {
         TimeLineWin.SetActive(false);
+    }
+
+    public void TimeLineOn()
+    {
+        TimeLineWin.SetActive(true);
+    }
+
+    //근무환경
+    public void OptionWinOff()
+    {
+        OptionWin.SetActive(false);
+    }
+
+    public void OptionWinOn()
+    {
+        OptionWin.SetActive(true);
+    }
+
+    //길드 약도
+    public void MapOn()
+    {
+        Debug.Log("맵 활성화");
+        MapWin.SetActive(true);
+    }
+    public void MapOff()
+    {
+        Debug.Log("맵 종료");
+        MapWin.SetActive(false);
     }
 
 }

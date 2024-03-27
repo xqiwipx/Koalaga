@@ -14,7 +14,7 @@ public class EventPanel : MonoBehaviour
 
     //public bool AutoTrick;
 
-    int ImgNum = 5;
+    int ImgNum = 6;
     void Start()
     {
         EventImg0.SetActive(true);
@@ -39,7 +39,7 @@ public class EventPanel : MonoBehaviour
         switch (ImgNum)
         {
             case 0:
-                PrologNextScene();
+                //PrologNextScene();
                 break;
 
             case 1:
@@ -68,7 +68,7 @@ public class EventPanel : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "00_Title")
         {
             //타이틀에서 이어지는 씬은 첫 출근이다.
-            SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(1);
         }
 
     }
