@@ -19,6 +19,8 @@ public class GameMgr : MonoBehaviour
     public GameObject TimeLineWin;
     public GameObject OptionWin;
     public GameObject MapWin;
+    public GameObject InteractionWin;
+    public GameObject SaveWin;
 
 
 
@@ -27,16 +29,7 @@ public class GameMgr : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "00_Main")
         {
             //타이틀창 시작하기 빼고 다 끄기
-            
-            TitleWin.SetActive(true);
-            Menubtn.SetActive(true);
-            memuWin.SetActive(false);
-            StartMenu.SetActive(false);
-            Prolog.SetActive(false);
-            ContinueMenu.SetActive(false);
-            TimeLineWin.SetActive(false);
-            OptionWin.SetActive(false);
-            MapWin.SetActive(false);
+            OnClickTitle();
         }
 
     }
@@ -77,8 +70,18 @@ public class GameMgr : MonoBehaviour
 
     public void OnClickTitle()
     {
-        //TitleWin.SetActive(true);
-        SceneManager.LoadScene(0); //타이틀
+        TitleWin.SetActive(true);
+        Menubtn.SetActive(true);
+        memuWin.SetActive(false);
+        StartMenu.SetActive(false);
+        Prolog.SetActive(false);
+        ContinueMenu.SetActive(false);
+        TimeLineWin.SetActive(false);
+        OptionWin.SetActive(false);
+        MapWin.SetActive(false);
+        SaveWin.SetActive(false);
+        InteractionWin.SetActive(false);
+        //SceneManager.LoadScene(0); //씬 초기화
 
     }
 
