@@ -9,18 +9,21 @@ public class TimeLine : MonoBehaviour
     public int Days = 0; //근무일수
     public Text Today; //근무일 표시
 
-    public int LastlDay = 3; //최종 근무일 설정 
+    public int LastDay = 3; //최종 근무일 설정 
     int LastSave = 1; //근무일지 마지막 작성일
 
     public GameObject BlindWin; //블라인드
 
     public Interaction Interaction; //로비버그 처리용
 
+    public EventMgr EventMgr;
+
     void Start()
     {
         BlindWin.SetActive(false);
         Today.text = Days + "일";
         Interaction = GameObject.Find("GameMgr").GetComponent<Interaction>(); //상호작용 호출
+        EventMgr = GameObject.Find("GameMgr").GetComponent <EventMgr>();
     }
 
     void Update()
@@ -60,15 +63,26 @@ public class TimeLine : MonoBehaviour
 
     IEnumerator BlindEF()
     {
+        EventMgr.isEventOn = true;
+
         BlindWin.SetActive(true); //로딩화면 연출
         yield return new WaitForSecondsRealtime(1);
         BlindWin.SetActive(false);
-        Interaction.isLobby = true; //출근하면 로비로
-
-        if (Days > LastlDay)
+                
+        if (Days > LastDay)
         {
+            Interaction.isLobby = false; //로비 강제나가기
             //근무 마지막날이 지났다
             Debug.Log("에필로그 호출!!");
+            EventMgr.EpilogOn();
         }
+        else
+        {
+            EventMgr.isEventOff = true; //이벤트창 끄기
+            Interaction.isLobby = true; //출근하면 로비로
+        }
+
+        
+
     }
 }

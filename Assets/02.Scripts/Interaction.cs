@@ -24,20 +24,15 @@ public class Interaction : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isLobby != false)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
                 //Debug.Log(hit.collider.name + "에 맞았다!!");
-                if (hit.collider.gameObject.tag != null && isLobby == false)
-                {
-                    Debug.Log("맵을 쓰던가 로비로 나가라!");
-
-                }
-
-                if (hit.collider != null && isLobby != false)
+                
+                if (hit.collider != null)
                 {
                     switch (hit.collider.gameObject.tag)
                     {

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class EventPanel : MonoBehaviour
 {
@@ -12,15 +12,18 @@ public class EventPanel : MonoBehaviour
     public GameObject EventImg2;
     public GameObject EventImg3;
 
-    //public bool AutoTrick;
+    public int ImgNum = 5;
+    public int ImgNum2;
 
-    int ImgNum = 6;
+    public EventMgr EventMgr;
     void Start()
     {
-        EventImg0.SetActive(true);
-        EventImg1.SetActive(true);
-        EventImg2.SetActive(true);
-        EventImg3.SetActive(true);
+        EventMgr = GameObject.Find("GameMgr").GetComponent<EventMgr>();
+
+        ImgNum2 = ImgNum;
+
+        EventSeting();
+        
     }
 
     void Update()
@@ -29,8 +32,16 @@ public class EventPanel : MonoBehaviour
         {
             ImgEvent();
         }
+    }
 
-                
+    public void EventSeting()
+    {
+        EventMgr.isEventOn = true;
+
+        EventImg0.SetActive(true);
+        EventImg1.SetActive(true);
+        EventImg2.SetActive(true);
+        EventImg3.SetActive(true);
     }
 
     public void ImgEvent()
@@ -39,7 +50,8 @@ public class EventPanel : MonoBehaviour
         switch (ImgNum)
         {
             case 0:
-                //PrologNextScene();
+                EventSeting();
+                ImgNum = ImgNum2;
                 break;
 
             case 1:
@@ -62,20 +74,6 @@ public class EventPanel : MonoBehaviour
 
     }
 
-    public void PrologNextScene()
-    {
-        //이 곳에 이어질 씬을 넣는다.
-        if (SceneManager.GetActiveScene().name == "00_Title")
-        {
-            //타이틀에서 이어지는 씬은 첫 출근이다.
-            //SceneManager.LoadScene(1);
-        }
-
-    }
-
-    public void AutoTrickOff()
-    {
-        //AutoTrick = false;
-    }
+   
 
 }

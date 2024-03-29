@@ -14,6 +14,7 @@ public class GameMgr : MonoBehaviour
 
     public GameObject StartMenu;
     public GameObject Prolog;
+    public GameObject AutoProlog;
 
     public GameObject ContinueMenu;
     public GameObject TimeLineWin;
@@ -23,6 +24,9 @@ public class GameMgr : MonoBehaviour
     public GameObject SaveWin;
 
 
+    public AutoProlog autoProlog;
+
+    public EventMgr EventMgr;
 
     void Start() //타이틀씬은 여기서 편집한다.
     {
@@ -31,6 +35,10 @@ public class GameMgr : MonoBehaviour
             //타이틀창 시작하기 빼고 다 끄기
             OnClickTitle();
         }
+
+        autoProlog = GameObject.Find("Menubtn").GetComponent<AutoProlog>(); //오토프롤로그
+
+        EventMgr = GameObject.Find("GameMgr").GetComponent<EventMgr>();
 
     }
 
@@ -45,6 +53,7 @@ public class GameMgr : MonoBehaviour
 
     public void MenuWin()
     {
+        autoProlog.AutoKey = false; //오토프롤로그 해제
         Menubtn.SetActive(false);
         memuWin.SetActive(true);
         StartMenu.SetActive(false);
@@ -53,7 +62,14 @@ public class GameMgr : MonoBehaviour
 
     public void ExitGame()
     {
-        Application.Quit(); //종료
+        Debug.Log("게임종료");
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                Application.Quit(); // 어플리케이션 종료
+        #endif
+
+        Application.Quit();
     }
 
     public void OnClickStartBtn()
@@ -65,6 +81,7 @@ public class GameMgr : MonoBehaviour
 
     public void PrologOff()
     {
+        EventMgr.EventWin.SetActive(false);
         Prolog.SetActive(false);
     }
 
@@ -75,6 +92,7 @@ public class GameMgr : MonoBehaviour
         memuWin.SetActive(false);
         StartMenu.SetActive(false);
         Prolog.SetActive(false);
+        AutoProlog.SetActive(false);
         ContinueMenu.SetActive(false);
         TimeLineWin.SetActive(false);
         OptionWin.SetActive(false);
@@ -82,6 +100,8 @@ public class GameMgr : MonoBehaviour
         SaveWin.SetActive(false);
         InteractionWin.SetActive(false);
         //SceneManager.LoadScene(0); //씬 초기화
+
+        //EventMgr.EventWin.SetActive(false);
 
     }
 
@@ -93,6 +113,7 @@ public class GameMgr : MonoBehaviour
 
     public void OnClickPrologBtn() //프롤로그
     {
+        EventMgr.EventWin.SetActive(true); //이벤트창 활성화
         Prolog.SetActive(true);
     }
 
