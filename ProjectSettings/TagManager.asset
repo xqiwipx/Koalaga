@@ -8,6 +8,8 @@ TagManager:
   - QuestBoard
   - GuildMaster
   - SavePoint
+  - Item
+  - ItemSlot
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimeLine : MonoBehaviour
 {
     //저장된 파일 불로오는 기능
-    public int Days = 0; //근무일수
+    public int Days = 1; //근무일수
     public Text Today; //근무일 표시
 
     public int LastDay = 3; //최종 근무일 설정 
