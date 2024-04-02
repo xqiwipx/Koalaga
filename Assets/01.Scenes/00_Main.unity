@@ -5680,7 +5680,6 @@ MonoBehaviour:
   WaitProlog: 5
   WaitPrologimg: 2
   AutoKey: 1
-  GameMgr: {fileID: 1548923851}
   EventMgr: {fileID: 0}
 --- !u!1 &1084668083
 GameObject:
@@ -7895,7 +7894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1429451628
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8615,7 +8614,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Epilog: {fileID: 152192039}
-  isEvent: 0
+  isEventOn: 0
+  isEventOff: 0
   EventWin: {fileID: 1776215188}
 --- !u!114 &1548923857
 MonoBehaviour:
