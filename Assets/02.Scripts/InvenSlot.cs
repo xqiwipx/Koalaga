@@ -6,29 +6,35 @@ public class InvenSlot : MonoBehaviour
 {
     //변수 선언
     public Transform rootSlot; //슬롯 틀?
-    public QuestBoard store; //스토어
+    public QuestBoard board; //퀘스트보드
 
-    private List<Slot> slots; //슬롯 리스트
+    private List<SlotC> slots; //슬롯 리스트
+    
 
     void Start()
     {
         //슬롯 리스트 정의
-        slots = new List<Slot>();
+        slots = new List<SlotC>();
 
         //슬롯 카운트에 슬롯 틀의 자식들 숫자를 대입
-        int slotCnt = rootSlot.childCount;
+        //int slotCnt = rootSlot.childCount;
 
         //슬롯 카운트만큼 반복
-        for (int i = 0; i < slotCnt; i++)
-        {
-            //슬롯에 i번째 자식의 슬롯 콤포넌트를 넣는다
-            var slot = rootSlot.GetChild(i).GetComponent<Slot>();
+        //for (int i = 0; i < slotCnt; i++)
+        //{
+        //    //슬롯에 i번째 자식의 슬롯 콤포넌트를 넣는다
+        //    var slot = rootSlot.GetChild(i).GetComponent<SlotC>();
 
-            //해당 슬롯 리스트에 보내기
-            slots.Add(slot);
-        }
+        //    //해당 슬롯 리스트에 보내기
+        //    slots.Add(slot);
+        //}
+
+        var slot = rootSlot.GetChild(0).GetComponent<SlotC>();
+        slots.Add(slot);
+
         // 스토어의 클릭된 슬롯과 아이템구매 함수 실행
-        store.onSlotClick += BuyItem;
+        //board.onSlotClick += BuyItem;
+        board.onSlotClick = BuyItem;
     }
 
     void Update()

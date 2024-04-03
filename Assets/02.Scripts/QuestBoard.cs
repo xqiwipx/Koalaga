@@ -9,16 +9,17 @@ public class QuestBoard : MonoBehaviour
     public ItemBuffer itemBuffer; //아이템 리스트
     public Transform slotRoot; //슬롯틀?
 
-    private List<Slot> slots; //슬롯 리스트 선언
+    private List<SlotC> slots; //슬롯 리스트 선언
+    private SlotC SlotC;
 
-    //외부 연동 변수 함수?
+    //외부로 넘겨주는 함수?
     public System.Action<ItemProperty> onSlotClick;
 
     void Start()
     {
-        itemBuffer = GameObject.Find("ItemBuffer").GetComponent<ItemBuffer>();
+        //itemBuffer = GameObject.Find("ItemBuffer").GetComponent<ItemBuffer>();
 
-        slots = new List<Slot>(); //슬롯들 리스트 정의
+        slots = new List<SlotC>(); //슬롯들 리스트 정의
 
         int slotCnt = slotRoot.childCount; //슬롯카운트는 슬롯틀 안의 자식숫자로 정의
 
@@ -26,7 +27,7 @@ public class QuestBoard : MonoBehaviour
         for (int i = 0; i < slotCnt; i++)
         {
             //대상슬롯은 i번째 슬롯의 컨포넌트 
-            var slot = slotRoot.GetChild(i).GetComponent<Slot>();
+            var slot = slotRoot.GetChild(i).GetComponent<SlotC>();
 
             //i가 아이템카운트를 넘지 않으면
             if (i < itemBuffer.items.Count)
@@ -36,8 +37,9 @@ public class QuestBoard : MonoBehaviour
             }
             else
             {
+                //Debug.Log("아이템이 비어있습니다");
                 //아이템 없으면? using UnityEngine.UI;
-                slot.GetComponent<Button>().interactable = false;
+                //slot.GetComponent<Button>().interactable = false;
                 //슬롯의 버튼기능을 비활성화 한다
             }
             //슬롯 리스트에 해당 슬롯을 보낸다
@@ -52,7 +54,7 @@ public class QuestBoard : MonoBehaviour
     }
 
     //해당 슬롯에 함수를 실행
-    public void OnClickSlot(Slot slot)
+    public void OnClickSlot(SlotC slot)
     {
         //Debug.Log(slot.name + " 클릭 확인!");
         //외부 변수값이 빈값이 아니면
@@ -61,6 +63,10 @@ public class QuestBoard : MonoBehaviour
             //외부 변수에 해당 슬롯의 아이템을 넣는다
             onSlotClick(slot.item);
 
+        }
+        else
+        {
+            SlotC.SetItem(null);
         }
 
     }
