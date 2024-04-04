@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class QuestBoard : MonoBehaviour
+public class BookCart : MonoBehaviour
 {
     //아이템 생성용 상점
     public ItemBuffer itemBuffer; //아이템 리스트

@@ -1,40 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class InvenSlot : MonoBehaviour
 {
     //변수 선언
     public Transform rootSlot; //슬롯 틀?
-    public QuestBoard board; //퀘스트보드
+
+    //public ViceMaster board1; //발행처
+    //public QuestBoard board; //퀘스트보드
+    public BookCart board; //서류 카트
+    //public GuildMaster board3; //상급 부서
 
     private List<SlotC> slots; //슬롯 리스트
-    
+
+    public ItemProperty Sitem; //꺼낸 아이템
+    public ItemProperty Pitem; //넣을 아이템
 
     void Start()
     {
+
         //슬롯 리스트 정의
         slots = new List<SlotC>();
-
-        //슬롯 카운트에 슬롯 틀의 자식들 숫자를 대입
-        //int slotCnt = rootSlot.childCount;
-
-        //슬롯 카운트만큼 반복
-        //for (int i = 0; i < slotCnt; i++)
-        //{
-        //    //슬롯에 i번째 자식의 슬롯 콤포넌트를 넣는다
-        //    var slot = rootSlot.GetChild(i).GetComponent<SlotC>();
-
-        //    //해당 슬롯 리스트에 보내기
-        //    slots.Add(slot);
-        //}
 
         var slot = rootSlot.GetChild(0).GetComponent<SlotC>();
         slots.Add(slot);
 
-        // 스토어의 클릭된 슬롯과 아이템구매 함수 실행
-        //board.onSlotClick += BuyItem;
-        board.onSlotClick = BuyItem;
+        slot.SetItem(null);
+
+        //선택아이템을 사용중표시
+        board.onSlotClick = PickItem;
+
+        Pitem = null; //넣을 아이템 초기화
     }
 
     void Update()
@@ -43,20 +41,26 @@ public class InvenSlot : MonoBehaviour
     }
 
     //아이템 구매 함수 정의(해당 아이템 정보)
-    void BuyItem(ItemProperty item)
+    void PickItem(ItemProperty item)
     {
         //Debug.Log(item.name + " 값을 받아왔다.");
-        //선택 슬롯에 슬롯 리스트에서 찾은값을 넣는다
-        var emptySlot = slots.Find(t =>
-        {
-            return t.item == null || t.item.name == string.Empty;
-        }); //받아온 아이템이 널값이거나 받아온 아이템의 이름값
 
-        //선택슬롯값이 널값이 아니면 
-        if (emptySlot != null)
-        {
-            //선택 슬롯에 해당아이템을 넣는함수 실행
-            emptySlot.SetItem(item);
-        }
+        var emptySlot = rootSlot.GetChild(0).GetComponent<SlotC>();
+        slots.Add(emptySlot);
+
+        emptySlot.SetItem(item);
+
+    }
+
+    public void OnClickSlot(SlotC slot)
+    {
+        //클릭하면 아이템 스왑
+        board.onSlotClick(slot.item);
+
+        Sitem = slot.item;
+
+        slot.SetItem(Pitem);
+
+        Pitem = Sitem;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class QuestBoard : MonoBehaviour
+public class ViceMaster : MonoBehaviour
 {
     //아이템 생성용 상점
     public ItemBuffer itemBuffer; //아이템 리스트
@@ -28,18 +28,9 @@ public class QuestBoard : MonoBehaviour
             //대상슬롯은 i번째 슬롯의 컨포넌트 
             var slot = slotRoot.GetChild(i).GetComponent<SlotC>();
 
-            slot.SetItem(null);
-
-            //i가 아이템카운트를 넘지 않으면
-            //if (i < itemBuffer.items.Count)
-            //{
-            //    //대상슬롯에 i번째 아이템을 넣는다
-            //    slot.SetItem(itemBuffer.items[i]);
-            //}
-            //else
-            //{
-            //    slot.SetItem(null);
-            //}
+            int j = Random.Range(0, itemBuffer.items.Count);
+            //랜덤으로 아이템을 넣는다
+            slot.SetItem(itemBuffer.items[j]);
 
             //슬롯 리스트에 해당 슬롯을 보낸다
             slots.Add(slot);

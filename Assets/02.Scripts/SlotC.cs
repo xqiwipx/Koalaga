@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SlotC : MonoBehaviour
 {
-    [HideInInspector]
+    //[HideInInspector]
     // 해당 아이템 선언?
     public ItemProperty item;
 
@@ -59,7 +59,10 @@ public class SlotC : MonoBehaviour
             image.sprite = item.sprite;
             //판매버튼을 활성화 설정
             //SetSellBtnInteractable(true);
+
+            
         }
+
     }
 
     //판매버튼 함수를 정의한다
