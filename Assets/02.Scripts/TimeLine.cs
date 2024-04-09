@@ -30,7 +30,7 @@ public class TimeLine : MonoBehaviour
         BlindWin.SetActive(false);
         Today.text = Days + "일";
 
-        //questBoard = GameObject.Find("QBWin").GetComponent<QuestBoard>();
+        questBoard = GameObject.Find("ItemBuffer").GetComponent<QuestBoard>();
 
         interaction = GameObject.Find("GameMgr").GetComponent<Interaction>(); //상호작용 호출
         EventMgr = GameObject.Find("GameMgr").GetComponent <EventMgr>();
