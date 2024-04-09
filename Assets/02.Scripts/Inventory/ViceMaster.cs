@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-//using static UnityEditor.Progress;
 
 public class ViceMaster : MonoBehaviour
 {
     //아이템 생성용 상점
     public ItemBuffer itemBuffer; //아이템 리스트
     public Transform slotRoot; //슬롯틀?
+    public BookCart bookCart; //서류카트
 
     private List<SlotC> slots; //슬롯 리스트 선언
 
     void Start()
     {
+        bookCart = GameObject.Find("ItemBuffer").GetComponent<BookCart>();
 
         slots = new List<SlotC>(); //슬롯들 리스트 정의
-        
+
         // 서류 발급처 초기화
         //슬롯카운트 만큼 반복
         for (int i = 0; i < slotRoot.childCount; i++)
@@ -56,6 +58,52 @@ public class ViceMaster : MonoBehaviour
             }
         }
     }
-    
+
+    public void GetAll()
+    {
+        for (int i = 0; i < slotRoot.childCount; i++)
+        {
+            var itemSlot = slots.Find(t =>
+            {
+                return t.item != itemBuffer.items[0];
+            });
+
+            var cartSlot = bookCart.slots.Find(t =>
+            {
+                return t.item == itemBuffer.items[0];
+            });
+            if(cartSlot != null && itemSlot != null)
+            {
+                cartSlot.SetItem(itemSlot.item);
+                itemSlot.SetItem(itemBuffer.items[0]);
+            }
+            
+        }
+
+    }
+
+    public void QuestGet()
+    {
+        for (int i = 0; i < slotRoot.childCount; i++)
+        {
+            var itemSlot = slots.Find(t =>
+            {
+                return t.item == itemBuffer.items[1] || t.item == itemBuffer.items[2] || t.item == itemBuffer.items[3];
+            });
+
+            var cartSlot = bookCart.slots.Find(t =>
+            {
+                return t.item == itemBuffer.items[0] || t.item == itemBuffer.items[6];
+            });
+            if (itemSlot != null && cartSlot != null)
+            {
+                cartSlot.SetItem(itemSlot.item);
+                itemSlot.SetItem(itemBuffer.items[0]);
+            }
+
+        }
+
+    }
+
 }
 

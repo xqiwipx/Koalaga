@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using static UnityEditor.Progress;
 
 public class InvenSlot : MonoBehaviour
 {
@@ -9,10 +8,7 @@ public class InvenSlot : MonoBehaviour
     public ItemBuffer itemBuffer; //아이템 리스트
     public Transform slotRoot; //슬롯 틀?
 
-    //public ViceMaster board1; //발행처
-    //public QuestBoard board; //퀘스트보드
     public BookCart board; //서류 카트
-    //public GuildMaster board3; //상급 부서
 
     private List<SlotC> slots; //슬롯 리스트
 
@@ -77,6 +73,8 @@ public class InvenSlot : MonoBehaviour
         }
 
         slot.SetItem(Pitem); //들고있던 아이템 넣기
+
+        //Debug.Log(slot.item.name + " 들어있음");
 
         Pitem = Sitem; //슬롯에 있던 아이템 들기
     }

@@ -9,7 +9,7 @@ public class BookCart : MonoBehaviour
     public ItemBuffer itemBuffer; //아이템 리스트
     public Transform slotRoot; //슬롯틀?
 
-    private List<SlotC> slots; //슬롯 리스트 선언
+    public List<SlotC> slots; //슬롯 리스트 선언
 
     //외부로 넘겨주는 함수?
     public System.Action<ItemProperty> onSlotClick;
