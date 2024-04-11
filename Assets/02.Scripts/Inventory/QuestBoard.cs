@@ -14,8 +14,13 @@ public class QuestBoard : MonoBehaviour
 
     public bool isMQ = false; //길드마스터 기능 아이템
 
+    //코인관련
+    public CoinMgr coinMgr;
+
     void Start()
     {
+        coinMgr = GameObject.Find("GameMgr").GetComponent<CoinMgr>();
+
         bookCart = GameObject.Find("ItemBuffer").GetComponent<BookCart>();
 
         slots = new List<SlotC>(); //슬롯들 리스트 정의
@@ -54,16 +59,23 @@ public class QuestBoard : MonoBehaviour
             {
                 case "Empty": //빈칸
                     slot.SetItem(itemBuffer.items[6]);
+                    coinMgr.PriCoin(1); //기본 급료
                     break;
 
                 case "Quest_B": //중급 퀘스트
                     if(j < 1)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        coinMgr.PriCoin(5);
                     }
                     else if(j > 1)
                     {
                         slot.SetItem(itemBuffer.items[5]);
+                        coinMgr.PriCoin(2);
+                    }
+                    else
+                    {
+                        coinMgr.PriCoin(1);
                     }
                     break;
 
@@ -71,10 +83,16 @@ public class QuestBoard : MonoBehaviour
                     if (j < 1)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        coinMgr.PriCoin(3);
                     }
                     else if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[1]);
+                        coinMgr.PriCoin(1);
+                    }
+                    else
+                    {
+                        coinMgr.PriCoin(1);
                     }
                     break;
 
@@ -83,17 +101,25 @@ public class QuestBoard : MonoBehaviour
                     if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[0]); //반복 퀘스트 마감
+                        coinMgr.PriCoin(7);
                     }
+                    coinMgr.PriCoin(Random.Range(0, j * 5)); //수수료 랜덤
                     break;
 
                 case "Quest_M": //지정 퀘스트 남으면 벌금
                     if (isMQ == true)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        coinMgr.PriCoin(10);
                     }
                     else if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[5]); //벌금
+                        coinMgr.FiCoin(10);
+                    }
+                    else
+                    {
+                        coinMgr.FiCoin(10);
                     }
                     break;
 
@@ -101,21 +127,24 @@ public class QuestBoard : MonoBehaviour
                     if (isMQ == true)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        coinMgr.PriCoin(3);
                     }
                     else
                     {
                         //벌금
+                        coinMgr.FiCoin(5);
                     }
                     break;
 
                 case "Quest_O": //오래 빈자리
-                    if (isMQ == true)
+                    if (isMQ != true)
                     {
-                        //벌금면제
+                        //벌금
+                        coinMgr.FiCoin(2);
                     }
                     else
                     {
-                        // 벌금
+                        // 벌금면제
                     }
                         
                     break;
@@ -170,6 +199,31 @@ public class QuestBoard : MonoBehaviour
 
         }
 
+    }
+
+    public void FixBoard()
+    {
+        for (int i = 0; i < slotRoot.childCount; i++)
+        {
+            var QuestSlot = slots.Find(t =>
+            {
+                return t.item != itemBuffer.items[0] && t.item != itemBuffer.items[1] && t.item != itemBuffer.items[2] && t.item != itemBuffer.items[3] || t.item == itemBuffer.items[4] || t.item == itemBuffer.items[5] || t.item == itemBuffer.items[6] ;
+            });
+
+            var cartSlot = bookCart.slots.Find(t =>
+            {
+                return t.item == itemBuffer.items[0];
+            });
+            if (cartSlot != null && QuestSlot != null)
+            {
+                if(QuestSlot.item != itemBuffer.items[6])
+                {
+                    cartSlot.SetItem(QuestSlot.item);
+                }
+                QuestSlot.SetItem(itemBuffer.items[0]);
+            }
+
+        }
     }
 
 }

@@ -15,8 +15,16 @@ public class InvenSlot : MonoBehaviour
     public ItemProperty Sitem; //꺼낸 아이템
     public ItemProperty Pitem; //넣을 아이템
 
+    //코인 관련
+    public CoinMgr coinMgr;
+    public QuestBoard questBoard;
+
     void Start()
     {
+        coinMgr = GameObject.Find("GameMgr").GetComponent<CoinMgr>();
+
+        questBoard = GameObject.Find("ItemBuffer").GetComponent<QuestBoard>();
+
         //itemBuffer = GetComponent<ItemBuffer>();
 
         //슬롯 리스트 정의
@@ -77,5 +85,43 @@ public class InvenSlot : MonoBehaviour
         //Debug.Log(slot.item.name + " 들어있음");
 
         Pitem = Sitem; //슬롯에 있던 아이템 들기
+    }
+
+    public void UseSlotUpdate()
+    {
+        var slot = slotRoot.GetChild(0).GetComponent<SlotC>();
+
+        switch (slot.item.name)
+        {
+            case "Empty": //빈칸
+                break;
+
+            case "Quest_B": //중급 퀘스트
+
+                break;
+
+            case "Quest_C": //하급 퀘스트
+
+                break;
+
+            case "Quest_L": //반복 퀘스트
+
+                break;
+
+            case "Quest_M": //지정 퀘스트 남으면 벌금
+                if (questBoard.isMQ != true)
+                    coinMgr.FiCoin(10);
+                break;
+
+            case "Quest_N": //취급 불가
+                if (questBoard.isMQ != true)
+                    coinMgr.FiCoin(5);
+                break;
+
+            case "Quest_O": //오래 빈자리
+                break;
+
+
+        }
     }
 }

@@ -42,12 +42,31 @@ public class CoinMgr : MonoBehaviour
 
     public void TodayTotal()
     {
-        MyCoinTxt.text = "소지금 : +C " + myCoin;
+        MyCoinTxt.text = "소지금 :   C " + myCoin;
         LiCoinTxt.text = "생활비 : -C " + liCoin;
         priCoinTxt.text = "수수료 : +C " + priCoin;
         fiCoinTxt.text = "수습비 : -C " + fiCoin;
 
         totalCoin = myCoin - liCoin + priCoin - fiCoin;
-        totalCoinTxt.text = "총합결과 :  C " + totalCoin;
+        totalCoinTxt.text = "총합산 :   C " + totalCoin;
     }
+
+    //수수료 증가
+    public void PriCoin(int coin)
+    {
+        for(int i = 0; i < coin; i++)
+        {
+            priCoin++;
+        }
+    }
+
+    //수습비 증가
+    public void FiCoin(int coin)
+    {
+        for (int i = 0; i < coin; i++)
+        {
+            fiCoin++;
+        }
+    }
+
 }

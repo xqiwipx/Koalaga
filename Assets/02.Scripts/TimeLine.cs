@@ -15,11 +15,16 @@ public class TimeLine : MonoBehaviour
 
     //외부 호출
     public GameObject BlindWin; //블라인드
+    public GameObject WorkData; //근무평가표
 
     public Interaction interaction; //상호작용 처리용
     public GuildMaster guildMaster;
     public ViceMaster viceMaster;
     public QuestBoard questBoard;
+    public BookCart bookCart;
+    public InvenSlot invenSlot;
+
+    public CoinMgr coinMgr;
 
     public EventMgr EventMgr;
 
@@ -29,6 +34,12 @@ public class TimeLine : MonoBehaviour
 
         BlindWin.SetActive(false);
         Today.text = Days + "일";
+
+        coinMgr = GameObject.Find("GameMgr").GetComponent<CoinMgr>();
+
+        bookCart = GameObject.Find("ItemBuffer").GetComponent<BookCart>();
+
+        invenSlot = GameObject.Find("ItemBuffer").GetComponent<InvenSlot>();
 
         questBoard = GameObject.Find("ItemBuffer").GetComponent<QuestBoard>();
 
@@ -77,27 +88,40 @@ public class TimeLine : MonoBehaviour
         EventMgr.isEventOn = true;
 
         BlindWin.SetActive(true); //로딩중 정산 내용 예정
-        //인벤토리 정산관련 함수
-        Calculate();
 
-        yield return new WaitForSecondsRealtime(1);
-        BlindWin.SetActive(false); //대시시간 후 끄기
-                
-        if (Days > LastDay)
+        if (Days == 1 || Days == LastSave)
         {
-            interaction.LobbyOut(); //로비 강제나가기
-            //근무 마지막날이 지났다
-            Debug.Log("에필로그 호출!!");
-            EventMgr.EpilogOn();
+            WorkData.SetActive(false);
         }
         else
         {
-            EventMgr.isEventOff = true; //이벤트창 끄기
-            interaction.LobbyIn(); //출근하면 로비로
+            //인벤토리 정산관련 함수
+            Calculate();
+        }
+
+        yield return new WaitForSecondsRealtime(1);
+                
+        if (Days > LastDay || coinMgr.totalCoin < 0)
+        {
+            yield return new WaitForSecondsRealtime(3);
+            BlindWin.SetActive(false); //대기시간 후 끄기
+            interaction.LobbyOut(); //로비 강제나가기
+            //근무 마지막날이 지났다
+            Debug.Log("에필로그 또는 게임오버 호출!!");
+            Days = 1;
+            EventMgr.EpilogOn();
+        }
+        else if (Days == 1 || Days == LastSave)
+        {
+            BlindOff();
+            Go2Work(); //출근 함수
+        }else
+        {
+
         }
     }
 
-    //정산관련 작업중인 함수
+    //정산관련 작업 함수
     public void Calculate()
     {
         interaction.InterWinMgr(7); //정산을 위한 활성화
@@ -105,6 +129,27 @@ public class TimeLine : MonoBehaviour
         guildMaster.EmptySlot();
         viceMaster.NowItem();
         questBoard.QuestUpdate();
+        bookCart.CartUpdate();
+        invenSlot.UseSlotUpdate();
+
+
+        WorkData.SetActive(true); //근무 평가표
+        coinMgr.TodayTotal();
+
+    }
+
+    //출근하기
+    public void Go2Work()
+    {
+        interaction.LobbyIn(); //출근하면 로비로
+        coinMgr.TodayMyCoin(); //정산코인 갱신
+    }
+
+    //블라인드 근무 평가표 끄기
+    public void BlindOff()
+    {
+        BlindWin.SetActive(false);
+        EventMgr.isEventOff = true; //이벤트창 끄기
 
     }
 
