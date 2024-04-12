@@ -56,9 +56,10 @@ public class TimeLine : MonoBehaviour
     {
         Debug.Log("처음부터 출근");
         //날짜 초기화
+        coinMgr.totalCoin = 18;
         Days = 1;
         Today.text = Days + "일";
-        StartCoroutine(BlindEF());
+        StartCoroutine("BlindEF");
     }
     public void QuickLoad()
     {
@@ -66,7 +67,7 @@ public class TimeLine : MonoBehaviour
         //바로 출근 연결
         Days = LastSave; //저장된 근무날짜
         Today.text = Days + "일";
-        StartCoroutine(BlindEF());
+        StartCoroutine("BlindEF");
     }
 
     public void Save() //세이브 관련
@@ -79,7 +80,7 @@ public class TimeLine : MonoBehaviour
     {
         Days++; //다음날 설정
         Today.text = Days + "일";
-        StartCoroutine(BlindEF());
+        StartCoroutine("BlindEF");
 
     }
 
@@ -109,12 +110,14 @@ public class TimeLine : MonoBehaviour
             //근무 마지막날이 지났다
             Debug.Log("에필로그 또는 게임오버 호출!!");
             Days = 1;
+            StopAllCoroutines();
             EventMgr.EpilogOn();
         }
         else if (Days == 1 || Days == LastSave)
         {
             BlindOff();
             Go2Work(); //출근 함수
+            StopCoroutine("BlindEF");
         }else
         {
 

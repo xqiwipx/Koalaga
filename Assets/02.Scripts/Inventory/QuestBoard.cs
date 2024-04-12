@@ -157,6 +157,11 @@ public class QuestBoard : MonoBehaviour
 
     public void GetDown()
     {
+        StartCoroutine("WiteGetDown");
+    }
+
+    IEnumerator WiteGetDown()
+    {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
             var QuestSlot = slots.Find(t =>
@@ -173,12 +178,17 @@ public class QuestBoard : MonoBehaviour
                 cartSlot.SetItem(QuestSlot.item);
                 QuestSlot.SetItem(itemBuffer.items[0]);
             }
-
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-
+        StopCoroutine("WiteGetDown");
     }
 
     public void QuestNotice()
+    {
+        StartCoroutine("WiteQuestNotice");
+    }
+
+    IEnumerator WiteQuestNotice()
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
@@ -196,18 +206,24 @@ public class QuestBoard : MonoBehaviour
                 QuestSlot.SetItem(cartSlot.item);
                 cartSlot.SetItem(itemBuffer.items[0]);
             }
-
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-
+        StopCoroutine("WiteQuestNotice");
     }
 
+
     public void FixBoard()
+    {
+        StartCoroutine("WiteFixBoard");
+    }
+
+    IEnumerator WiteFixBoard()
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
             var QuestSlot = slots.Find(t =>
             {
-                return t.item != itemBuffer.items[0] && t.item != itemBuffer.items[1] && t.item != itemBuffer.items[2] && t.item != itemBuffer.items[3] || t.item == itemBuffer.items[4] || t.item == itemBuffer.items[5] || t.item == itemBuffer.items[6] ;
+                return t.item != itemBuffer.items[0] && t.item != itemBuffer.items[1] && t.item != itemBuffer.items[2] && t.item != itemBuffer.items[3] || t.item == itemBuffer.items[4] || t.item == itemBuffer.items[5] || t.item == itemBuffer.items[6];
             });
 
             var cartSlot = bookCart.slots.Find(t =>
@@ -216,15 +232,17 @@ public class QuestBoard : MonoBehaviour
             });
             if (cartSlot != null && QuestSlot != null)
             {
-                if(QuestSlot.item != itemBuffer.items[6])
+                if (QuestSlot.item != itemBuffer.items[6])
                 {
                     cartSlot.SetItem(QuestSlot.item);
                 }
                 QuestSlot.SetItem(itemBuffer.items[0]);
             }
-
+            yield return new WaitForSecondsRealtime(0.1f);
         }
+        StopCoroutine("WiteFixBoard");
     }
+
 
 }
 

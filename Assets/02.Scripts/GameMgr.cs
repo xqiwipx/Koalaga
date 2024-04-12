@@ -19,6 +19,7 @@ public class GameMgr : MonoBehaviour
     public GameObject ContinueMenu;
     public GameObject TimeLineWin;
     public GameObject OptionWin;
+    public GameObject CoinShopWin; //코인샵
     public GameObject MapWin;
     public GameObject InteractionWin;
     public GameObject SaveWin;
@@ -96,6 +97,7 @@ public class GameMgr : MonoBehaviour
         ContinueMenu.SetActive(false);
         TimeLineWin.SetActive(false);
         OptionWin.SetActive(false);
+        CoinShopWin.SetActive(false);
         MapWin.SetActive(false);
         SaveWin.SetActive(false);
         InteractionWin.SetActive(false);
@@ -123,38 +125,61 @@ public class GameMgr : MonoBehaviour
         memuWin.SetActive(false);
     }
 
+    public void TopWinOff()
+    {
+        TimeLineWin.SetActive(false);
+        OptionWin.SetActive(false);
+        CoinShopWin.SetActive(false);
+        MapWin.SetActive(false);
+    }
+
     //근무일지
     public void TimeLineOff()
     {
-        TimeLineWin.SetActive(false);
+        TopWinOff();
     }
 
     public void TimeLineOn()
     {
+        TopWinOff();
         TimeLineWin.SetActive(true);
     }
 
     //근무환경
     public void OptionWinOff()
     {
-        OptionWin.SetActive(false);
+        TopWinOff();
     }
 
     public void OptionWinOn()
     {
+        TopWinOff();
         OptionWin.SetActive(true);
+    }
+
+    //코인샵
+    public void CoinShopWinOff()
+    {
+        TopWinOff();
+    }
+
+    public void CoinShopWinOn()
+    {
+        TopWinOff();
+        CoinShopWin.SetActive(true);
     }
 
     //길드 약도
     public void MapOn()
     {
+        TopWinOff();
         Debug.Log("맵 활성화");
         MapWin.SetActive(true);
     }
     public void MapOff()
     {
         Debug.Log("맵 종료");
-        MapWin.SetActive(false);
+        TopWinOff();
     }
 
 }

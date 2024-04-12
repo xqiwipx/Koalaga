@@ -54,6 +54,12 @@ public class GuildMaster : MonoBehaviour
 
     public void SendAll()
     {
+        StartCoroutine("WiteSendAll");
+
+    }
+
+    IEnumerator WiteSendAll()
+    {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
             var cartSlot = bookCart.slots.Find(t =>
@@ -70,12 +76,21 @@ public class GuildMaster : MonoBehaviour
                 GmaSlot.SetItem(cartSlot.item);
                 cartSlot.SetItem(itemBuffer.items[0]);
             }
-
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-
+        StopCoroutine("WiteSendAll");
     }
 
+
+
     public void Delivery()
+    {
+        StartCoroutine("WiteDelivery");
+
+        
+    }
+
+    IEnumerator WiteDelivery()
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
@@ -93,10 +108,11 @@ public class GuildMaster : MonoBehaviour
                 GmaSlot.SetItem(cartSlot.item);
                 cartSlot.SetItem(itemBuffer.items[0]);
             }
-
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-
+        StopCoroutine("WiteDelivery");
     }
+
 
 }
 
