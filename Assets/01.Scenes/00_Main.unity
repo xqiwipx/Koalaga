@@ -17662,7 +17662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Days: 1
   Today: {fileID: 932908979}
-  LastDay: 30
+  LastDay: 5
   BlindWin: {fileID: 1711085505}
   WorkData: {fileID: 61163314}
   interaction: {fileID: 1548923858}

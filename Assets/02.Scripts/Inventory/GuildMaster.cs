@@ -62,6 +62,7 @@ public class GuildMaster : MonoBehaviour
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var cartSlot = bookCart.slots.Find(t =>
             {
                 return t.item != itemBuffer.items[0];
@@ -76,7 +77,6 @@ public class GuildMaster : MonoBehaviour
                 GmaSlot.SetItem(cartSlot.item);
                 cartSlot.SetItem(itemBuffer.items[0]);
             }
-            yield return new WaitForSecondsRealtime(0.1f);
         }
         StopCoroutine("WiteSendAll");
     }
@@ -86,7 +86,6 @@ public class GuildMaster : MonoBehaviour
     public void Delivery()
     {
         StartCoroutine("WiteDelivery");
-
         
     }
 
@@ -94,6 +93,7 @@ public class GuildMaster : MonoBehaviour
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var cartSlot = bookCart.slots.Find(t =>
             {
                 return t.item == itemBuffer.items[4] || t.item == itemBuffer.items[5];
@@ -108,7 +108,6 @@ public class GuildMaster : MonoBehaviour
                 GmaSlot.SetItem(cartSlot.item);
                 cartSlot.SetItem(itemBuffer.items[0]);
             }
-            yield return new WaitForSecondsRealtime(0.1f);
         }
         StopCoroutine("WiteDelivery");
     }

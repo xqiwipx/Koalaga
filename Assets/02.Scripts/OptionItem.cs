@@ -156,24 +156,19 @@ public class OptionItem : MonoBehaviour
 
     IEnumerator MoneyGet()
     {
-        if (IsItem3 && coinMgr.useItem3)
+        while (IsItem3 && coinMgr.useItem3)
         {
             coinMgr.totalCoin = 999;
             coinMgr.TodayMyCoin();
             yield return new WaitForSecondsRealtime(lt);
-            MoneyGet();
         }
-        else
-        {
-            StopCoroutine("MoneyGet");
-        }
-        
+        StopCoroutine("MoneyGet");
     }
 
     public void AutoPlayBtn()
     {
         isAutoPlay = !isAutoPlay;
-        if (isAutoPlay == true)
+        if (isAutoPlay)
         {
             AutoPlayTxt.text = "자동 사용중";
 
@@ -206,10 +201,12 @@ public class OptionItem : MonoBehaviour
 
             gameMgr.MapOff();
             interaction.BoardIn(); //퀘스트보드
-            questBoard.FixBoard(); //유지보수
-            yield return new WaitForSecondsRealtime(mt);
+            yield return new WaitForSecondsRealtime(st);
 
             questBoard.QuestNotice(); //퀘스트 공지
+            yield return new WaitForSecondsRealtime(mt);
+
+            questBoard.FixBoard(); //유지보수
             yield return new WaitForSecondsRealtime(mt);
 
             gameMgr.MapOn(); //맵
@@ -233,8 +230,16 @@ public class OptionItem : MonoBehaviour
 
             gameMgr.MapOff();
             interaction.BoardIn(); //퀘스트보드
+            yield return new WaitForSecondsRealtime(st);
+
             questBoard.QuestNotice(); //퀘스트 공지
-            yield return new WaitForSecondsRealtime(mt);
+            yield return new WaitForSecondsRealtime(st);
+
+            questBoard.FixBoard(); //유지보수
+            yield return new WaitForSecondsRealtime(st);
+
+            questBoard.QuestNotice(); //퀘스트 공지
+            yield return new WaitForSecondsRealtime(st);
 
             gameMgr.MapOn(); //맵
             yield return new WaitForSecondsRealtime(st);
@@ -252,12 +257,20 @@ public class OptionItem : MonoBehaviour
             yield return new WaitForSecondsRealtime(st);
 
             timeLine.Save();//근무일지 작성
-            yield return new WaitForSecondsRealtime(st);
+            yield return new WaitForSecondsRealtime(mt);
 
-            timeLine.BlindOff();
-            timeLine.Go2Work();//출근
-            yield return new WaitForSecondsRealtime(st);
+            if (timeLine.Days > timeLine.LastDay)
+            {
+                AutoPlayBtn();
+                isAutoPlay = false;
+            }
+            else
+            {
+                timeLine.BlindOff();
+                timeLine.Go2Work();//출근
+                yield return new WaitForSecondsRealtime(st);
+            }
         }
-        
+        StopCoroutine("AutoPlay");
     }
 }

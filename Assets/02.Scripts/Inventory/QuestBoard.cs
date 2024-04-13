@@ -162,6 +162,7 @@ public class QuestBoard : MonoBehaviour
 
     IEnumerator WiteGetDown()
     {
+        yield return new WaitForSecondsRealtime(0.1f);
         for (int i = 0; i < slotRoot.childCount; i++)
         {
             var QuestSlot = slots.Find(t =>
@@ -178,7 +179,6 @@ public class QuestBoard : MonoBehaviour
                 cartSlot.SetItem(QuestSlot.item);
                 QuestSlot.SetItem(itemBuffer.items[0]);
             }
-            yield return new WaitForSecondsRealtime(0.1f);
         }
         StopCoroutine("WiteGetDown");
     }
@@ -192,6 +192,7 @@ public class QuestBoard : MonoBehaviour
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var cartSlot = bookCart.slots.Find(t =>
             {
                 return t.item == itemBuffer.items[1] || t.item == itemBuffer.items[2] || t.item == itemBuffer.items[3];
@@ -206,7 +207,6 @@ public class QuestBoard : MonoBehaviour
                 QuestSlot.SetItem(cartSlot.item);
                 cartSlot.SetItem(itemBuffer.items[0]);
             }
-            yield return new WaitForSecondsRealtime(0.1f);
         }
         StopCoroutine("WiteQuestNotice");
     }
@@ -221,24 +221,35 @@ public class QuestBoard : MonoBehaviour
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var QuestSlot = slots.Find(t =>
             {
-                return t.item != itemBuffer.items[0] && t.item != itemBuffer.items[1] && t.item != itemBuffer.items[2] && t.item != itemBuffer.items[3] || t.item == itemBuffer.items[4] || t.item == itemBuffer.items[5] || t.item == itemBuffer.items[6];
+                return t.item == itemBuffer.items[4] || t.item == itemBuffer.items[5] || t.item == itemBuffer.items[6];
             });
 
             var cartSlot = bookCart.slots.Find(t =>
             {
                 return t.item == itemBuffer.items[0];
             });
-            if (cartSlot != null && QuestSlot != null)
+
+            if (QuestSlot != null)
             {
-                if (QuestSlot.item != itemBuffer.items[6])
+                if (QuestSlot.item == itemBuffer.items[6])
+                {
+                    QuestSlot.SetItem(itemBuffer.items[0]);
+                }else if(cartSlot != null)
                 {
                     cartSlot.SetItem(QuestSlot.item);
+                    QuestSlot.SetItem(itemBuffer.items[0]);
                 }
-                QuestSlot.SetItem(itemBuffer.items[0]);
-            }
-            yield return new WaitForSecondsRealtime(0.1f);
+            } 
+
+            //if (cartSlot != null && QuestSlot != null)
+            //{
+            //    cartSlot.SetItem(QuestSlot.item);
+            //    QuestSlot.SetItem(itemBuffer.items[0]);
+            //}
+            
         }
         StopCoroutine("WiteFixBoard");
     }

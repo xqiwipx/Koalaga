@@ -95,10 +95,6 @@ public class BookCart : MonoBehaviour
                     break;
 
                 case "Quest_O": //오래 빈자리
-                    if (questBoard.isMQ != true && j < 1)
-                    {
-                        coinMgr.FiCoin(1);
-                    }
                         
                     break;
 

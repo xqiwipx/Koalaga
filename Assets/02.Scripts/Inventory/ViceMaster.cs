@@ -53,7 +53,7 @@ public class ViceMaster : MonoBehaviour
 
             if (emptySlot != null)
             {
-                int j = Random.Range(1, 6);
+                int j = Random.Range(0, 6);
                 emptySlot.SetItem(itemBuffer.items[j]);
             }
         }
@@ -68,6 +68,7 @@ public class ViceMaster : MonoBehaviour
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var itemSlot = slots.Find(t =>
             {
                 return t.item != itemBuffer.items[0];
@@ -82,7 +83,6 @@ public class ViceMaster : MonoBehaviour
                 cartSlot.SetItem(itemSlot.item);
                 itemSlot.SetItem(itemBuffer.items[0]);
             }
-            yield return new WaitForSecondsRealtime(0.1f);
         }
         StopCoroutine("WaitGetAll");
     }
@@ -96,6 +96,7 @@ public class ViceMaster : MonoBehaviour
     {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var itemSlot = slots.Find(t =>
             {
                 return t.item == itemBuffer.items[1] || t.item == itemBuffer.items[2] || t.item == itemBuffer.items[3];
@@ -110,7 +111,6 @@ public class ViceMaster : MonoBehaviour
                 cartSlot.SetItem(itemSlot.item);
                 itemSlot.SetItem(itemBuffer.items[0]);
             }
-            yield return new WaitForSecondsRealtime(0.1f);
         }
         StopCoroutine("WiteQuestGet");
     }
