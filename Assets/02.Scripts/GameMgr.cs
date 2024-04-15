@@ -27,7 +27,7 @@ public class GameMgr : MonoBehaviour
 
     public AutoProlog autoProlog;
 
-    public EventMgr EventMgr;
+    public EventMgr eventMgr;
 
     void Start() //타이틀씬은 여기서 편집한다.
     {
@@ -37,9 +37,9 @@ public class GameMgr : MonoBehaviour
             OnClickTitle();
         }
 
-        autoProlog = GameObject.Find("Menubtn").GetComponent<AutoProlog>(); //오토프롤로그
+        autoProlog = GameObject.Find("TopDum").GetComponent<AutoProlog>(); //오토프롤로그
 
-        EventMgr = GameObject.Find("GameMgr").GetComponent<EventMgr>();
+        eventMgr = GameObject.Find("GameMgr").GetComponent<EventMgr>();
 
     }
 
@@ -82,7 +82,7 @@ public class GameMgr : MonoBehaviour
 
     public void PrologOff()
     {
-        EventMgr.EventWin.SetActive(false);
+        eventMgr.EventWin.SetActive(false);
         Prolog.SetActive(false);
     }
 
@@ -115,7 +115,7 @@ public class GameMgr : MonoBehaviour
 
     public void OnClickPrologBtn() //프롤로그
     {
-        EventMgr.EventWin.SetActive(true); //이벤트창 활성화
+        eventMgr.EventWin.SetActive(true); //이벤트창 활성화
         Prolog.SetActive(true);
     }
 
