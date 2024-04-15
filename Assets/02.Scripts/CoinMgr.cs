@@ -63,13 +63,33 @@ public class CoinMgr : MonoBehaviour
 
     public void TodayTotal()
     {
+        MyCoinTxt.text = "소지금 :   C 정산중";
+        LiCoinTxt.text = "생활비 : -C 정산중";
+        priCoinTxt.text = "수수료 : +C 정산중";
+        fiCoinTxt.text = "수습비 : -C 정산중";
+
+        totalCoin = myCoin - liCoin + priCoin - fiCoin;
+        totalCoinTxt.text = "총합산 :   C 정산중";
+
+        StartCoroutine("WiteTodayTotal");
+    }
+
+    IEnumerator WiteTodayTotal()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
         MyCoinTxt.text = "소지금 :   C " + myCoin;
+        yield return new WaitForSecondsRealtime(0.2f);
         LiCoinTxt.text = "생활비 : -C " + liCoin;
+        yield return new WaitForSecondsRealtime(0.2f);
         priCoinTxt.text = "수수료 : +C " + priCoin;
+        yield return new WaitForSecondsRealtime(0.2f);
         fiCoinTxt.text = "수습비 : -C " + fiCoin;
 
         totalCoin = myCoin - liCoin + priCoin - fiCoin;
+        yield return new WaitForSecondsRealtime(0.2f);
         totalCoinTxt.text = "총합산 :   C " + totalCoin;
+
+        StartCoroutine("WiteTodayTotal");
     }
 
     //수수료 증가

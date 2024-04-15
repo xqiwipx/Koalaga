@@ -48,8 +48,14 @@ public class BookCart : MonoBehaviour
 
     public void CartUpdate()
     {
+        StartCoroutine("WiteCartUpdate");
+    }
+
+    IEnumerator WiteCartUpdate()
+    {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             //대상슬롯은 i번째 슬롯의 컨포넌트 
             var slot = slotRoot.GetChild(i).GetComponent<SlotC>();
 
@@ -62,7 +68,7 @@ public class BookCart : MonoBehaviour
                     {
                         slot.SetItem(itemBuffer.items[5]);
                     }
-                        
+
                     break;
 
                 case "Quest_B": //중급 퀘스트
@@ -83,7 +89,7 @@ public class BookCart : MonoBehaviour
                         slot.SetItem(itemBuffer.items[5]);
                         coinMgr.FiCoin(10);
                     }
-                    
+
                     break;
 
                 case "Quest_N": //취급 불가
@@ -95,14 +101,15 @@ public class BookCart : MonoBehaviour
                     break;
 
                 case "Quest_O": //오래 빈자리
-                        
+
                     break;
 
 
             }
 
         }
+        StopCoroutine("WiteCartUpdate");
     }
-    
+
 }
 

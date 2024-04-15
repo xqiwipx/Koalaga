@@ -44,8 +44,14 @@ public class ViceMaster : MonoBehaviour
 
     public void NowItem()
     {
+        StartCoroutine("WiteNowItem");
+    }
+
+    IEnumerator WiteNowItem()
+    {
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var emptySlot = slots.Find(t =>
             {
                 return t.item == null || t.item.name == string.Empty || t.item == itemBuffer.items[0];
@@ -57,6 +63,7 @@ public class ViceMaster : MonoBehaviour
                 emptySlot.SetItem(itemBuffer.items[j]);
             }
         }
+        StopCoroutine("WiteNowItem");
     }
 
     public void GetAll()

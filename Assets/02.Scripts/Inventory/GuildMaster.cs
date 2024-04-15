@@ -12,6 +12,7 @@ public class GuildMaster : MonoBehaviour
 
     private List<SlotC> slots; //슬롯 리스트 선언
 
+
     void Start()
     {
         bookCart = GameObject.Find("ItemBuffer").GetComponent<BookCart>();
@@ -40,9 +41,15 @@ public class GuildMaster : MonoBehaviour
     //슬롯의 모든 내용을 비운다.
     public void EmptySlot()
     {
+        StartCoroutine("WiteEmptySlot");
+    }
+
+    IEnumerator WiteEmptySlot()
+    {
         //슬롯카운트 만큼 반복
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             //대상슬롯은 i번째 슬롯의 컨포넌트 
             var slot = slotRoot.GetChild(i).GetComponent<SlotC>();
 
@@ -50,6 +57,7 @@ public class GuildMaster : MonoBehaviour
             slot.SetItem(itemBuffer.items[0]);
 
         }
+        StopCoroutine("WiteEmptySlot");
     }
 
     public void SendAll()
@@ -57,7 +65,7 @@ public class GuildMaster : MonoBehaviour
         StartCoroutine("WiteSendAll");
 
     }
-
+    // 남은 서류를 전달
     IEnumerator WiteSendAll()
     {
         for (int i = 0; i < slotRoot.childCount; i++)
@@ -88,7 +96,7 @@ public class GuildMaster : MonoBehaviour
         StartCoroutine("WiteDelivery");
         
     }
-
+    // 취급불가 서류를 전달
     IEnumerator WiteDelivery()
     {
         for (int i = 0; i < slotRoot.childCount; i++)

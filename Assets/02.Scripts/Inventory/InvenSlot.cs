@@ -18,12 +18,16 @@ public class InvenSlot : MonoBehaviour
     //코인 관련
     public CoinMgr coinMgr;
     public QuestBoard questBoard;
+    public bool clickOk = true; //클릭허용
+    public OptionItem optionItem; //서류이동관련
 
     void Start()
     {
         coinMgr = GameObject.Find("GameMgr").GetComponent<CoinMgr>();
 
         questBoard = GameObject.Find("ItemBuffer").GetComponent<QuestBoard>();
+
+        optionItem = GameObject.Find("ItemBuffer").GetComponent<OptionItem>();
 
         //itemBuffer = GetComponent<ItemBuffer>();
 
@@ -66,25 +70,30 @@ public class InvenSlot : MonoBehaviour
 
     public void OnClickSlot(SlotC slot)
     {
-        if(slot == null || slot.item.name == "Quest_O")
+        if (clickOk)
         {
-            //Debug.Log(slot.item.name + " 여기서 처리?");
-            board.onSlotClick(itemBuffer.items[0]);
+            if (slot == null || slot.item.name == "Quest_O")
+            {
+                //Debug.Log(slot.item.name + " 여기서 처리?");
+                board.onSlotClick(itemBuffer.items[0]);
 
-            Sitem = itemBuffer.items[0];
+                Sitem = itemBuffer.items[0];
 
-        } else
-        {
-            board.onSlotClick(slot.item);
+            }
+            else
+            {
+                board.onSlotClick(slot.item);
 
-            Sitem = slot.item; //슬롯 선택
+                Sitem = slot.item; //슬롯 선택
+            }
+
+            slot.SetItem(Pitem); //들고있던 아이템 넣기
+
+            //Debug.Log(slot.item.name + " 들어있음");
+
+            Pitem = Sitem; //슬롯에 있던 아이템 들기
         }
-
-        slot.SetItem(Pitem); //들고있던 아이템 넣기
-
-        //Debug.Log(slot.item.name + " 들어있음");
-
-        Pitem = Sitem; //슬롯에 있던 아이템 들기
+        
     }
 
     public void UseSlotUpdate()
@@ -123,5 +132,21 @@ public class InvenSlot : MonoBehaviour
 
 
         }
+    }
+
+    public void ClickOn()
+    {
+        clickOk = true;
+
+        //optionItem.IsItem1 = false;
+        //optionItem.CoinItem1(); //보따리상인 관련
+    }
+
+    public void ClickOff()
+    {
+        clickOk = false;
+
+        //optionItem.IsItem1 = true;
+        //optionItem.CoinItem1();
     }
 }

@@ -44,9 +44,15 @@ public class QuestBoard : MonoBehaviour
 
     public void QuestUpdate()
     {
+        StartCoroutine("WiteQuestUpdate");
+    }
+
+    IEnumerator WiteQuestUpdate()
+    {
         //슬롯카운트 만큼 반복
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             //대상슬롯은 i번째 슬롯의 컨포넌트 
             var slot = slotRoot.GetChild(i).GetComponent<SlotC>();
 
@@ -63,12 +69,12 @@ public class QuestBoard : MonoBehaviour
                     break;
 
                 case "Quest_B": //중급 퀘스트
-                    if(j < 1)
+                    if (j < 1)
                     {
                         slot.SetItem(itemBuffer.items[0]);
                         coinMgr.PriCoin(5);
                     }
-                    else if(j > 1)
+                    else if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[5]);
                         coinMgr.PriCoin(2);
@@ -146,13 +152,14 @@ public class QuestBoard : MonoBehaviour
                     {
                         // 벌금면제
                     }
-                        
+
                     break;
 
 
             }
 
         }
+        StopCoroutine("WiteQuestUpdate");
     }
 
     public void GetDown()
@@ -162,9 +169,9 @@ public class QuestBoard : MonoBehaviour
 
     IEnumerator WiteGetDown()
     {
-        yield return new WaitForSecondsRealtime(0.1f);
         for (int i = 0; i < slotRoot.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.1f);
             var QuestSlot = slots.Find(t =>
             {
                 return t.item != itemBuffer.items[0] && t.item != itemBuffer.items[6];

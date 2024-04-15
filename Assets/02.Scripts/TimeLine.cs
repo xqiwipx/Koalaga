@@ -78,6 +78,8 @@ public class TimeLine : MonoBehaviour
 
     public void NextDay()
     {
+        invenSlot.ClickOff(); //클릭불가
+
         Days++; //다음날 설정
         Today.text = Days + "일";
         StartCoroutine("BlindEF");
@@ -86,9 +88,7 @@ public class TimeLine : MonoBehaviour
 
     IEnumerator BlindEF()
     {
-        EventMgr.isEventOn = true;
-
-        BlindWin.SetActive(true); //로딩중 정산 내용 예정
+        BlindOn(); //로딩중 정산 내용 예정
 
         if (Days == 1 || Days == LastSave)
         {
@@ -99,46 +99,64 @@ public class TimeLine : MonoBehaviour
             //인벤토리 정산관련 함수
             Calculate();
         }
-
-        yield return new WaitForSecondsRealtime(1);
-                
+                              
         if (Days > LastDay || coinMgr.totalCoin < 0)
         {
+            StopCoroutine("AutoPlay");
             yield return new WaitForSecondsRealtime(3);
             BlindWin.SetActive(false); //대기시간 후 끄기
             interaction.LobbyOut(); //로비 강제나가기
             //근무 마지막날이 지났다
             Debug.Log("에필로그 또는 게임오버 호출!!");
-            Days = 1;
+            //Days = 1;
             StopAllCoroutines();
             EventMgr.EpilogOn();
         }
         else if (Days == 1 || Days == LastSave)
         {
+            yield return new WaitForSecondsRealtime(1);
+
             BlindOff();
             Go2Work(); //출근 함수
             StopCoroutine("BlindEF");
         }else
         {
-
+            yield return new WaitForSecondsRealtime(1);
         }
     }
 
     //정산관련 작업 함수
     public void Calculate()
     {
-        interaction.InterWinMgr(7); //정산을 위한 활성화
-        
-        guildMaster.EmptySlot();
-        viceMaster.NowItem();
-        questBoard.QuestUpdate();
-        bookCart.CartUpdate();
-        invenSlot.UseSlotUpdate();
+        StartCoroutine("WiteCalculate");
+    }
 
+    IEnumerator WiteCalculate()
+    {
+        BlindOff(); //블라인드 끄기
 
+        interaction.MasterIn();
+        interaction.InterTxt2.text = "전달서류 처리중";
+        guildMaster.EmptySlot(); //상위부서에서 서류처리
+        yield return new WaitForSecondsRealtime(1.8f);
+
+        interaction.ViceIn();
+        interaction.InterTxt2.text = "신규서류 발행중";
+        viceMaster.NowItem(); //발행처에서 새로운 서류
+        yield return new WaitForSecondsRealtime(1.8f);
+
+        interaction.BoardIn();
+        interaction.InterTxt2.text = "당일업무 평가중";
+        questBoard.QuestUpdate(); //퀘스트보드 정산
+        bookCart.CartUpdate(); //서류카트 검사
+        invenSlot.UseSlotUpdate(); //소지한 서류검사
+        yield return new WaitForSecondsRealtime(2.0f);
+
+        BlindOff();
         WorkData.SetActive(true); //근무 평가표
         coinMgr.TodayTotal();
 
+        StopCoroutine("WiteCalculate");
     }
 
     //출근하기
@@ -146,6 +164,7 @@ public class TimeLine : MonoBehaviour
     {
         interaction.LobbyIn(); //출근하면 로비로
         coinMgr.TodayMyCoin(); //정산코인 갱신
+        invenSlot.ClickOn(); //클릭가능
     }
 
     //블라인드 근무 평가표 끄기
@@ -154,6 +173,12 @@ public class TimeLine : MonoBehaviour
         BlindWin.SetActive(false);
         EventMgr.isEventOff = true; //이벤트창 끄기
 
+    }
+
+    public void BlindOn()
+    {
+        EventMgr.isEventOn = true;
+        BlindWin.SetActive(true);
     }
 
 }

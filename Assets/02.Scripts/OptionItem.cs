@@ -42,8 +42,8 @@ public class OptionItem : MonoBehaviour
 
     //시간 딜레이
     public float st = 0.5f;
-    public float mt = 2.5f;
-    public float lt = 5;
+    public float mt = 2.0f;
+    public float lt = 6.0f;
 
     void Start()
     {
@@ -257,7 +257,7 @@ public class OptionItem : MonoBehaviour
             yield return new WaitForSecondsRealtime(st);
 
             timeLine.Save();//근무일지 작성
-            yield return new WaitForSecondsRealtime(mt);
+            yield return new WaitForSecondsRealtime(lt);
 
             if (timeLine.Days > timeLine.LastDay)
             {
@@ -266,6 +266,7 @@ public class OptionItem : MonoBehaviour
             }
             else
             {
+                yield return new WaitForSecondsRealtime(mt);
                 timeLine.BlindOff();
                 timeLine.Go2Work();//출근
                 yield return new WaitForSecondsRealtime(st);
