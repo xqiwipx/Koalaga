@@ -41,6 +41,11 @@ public class AutoProlog : MonoBehaviour
             eventMgr.isEventOn = true;
             PrologSeting();
         }
+        else
+        {
+            Autoprolog.SetActive(false);
+            eventMgr.isEventOff = true;
+        }
 
     }
 
@@ -52,7 +57,7 @@ public class AutoProlog : MonoBehaviour
             StopCoroutine("loadProlog");
             //SceneManager.LoadScene(0);
             eventMgr.isEventOff = true;
-            gameMgr.MenuWin();
+            gameMgr.OnClickTitle();
         }
     }
 
@@ -92,14 +97,15 @@ public class AutoProlog : MonoBehaviour
             EventImg2.SetActive(false);
             yield return new WaitForSecondsRealtime(WaitPrologimg);
             EventImg3.SetActive(false);
-
+            Autoprolog.SetActive(false);
             eventMgr.isEventOff = true;
 
-            gameMgr.MenuWin();
+            gameMgr.OnClickTitle();
             StopCoroutine("loadProlog");
         }
         else
         {
+            Autoprolog.SetActive(false);
             eventMgr.isEventOff = true;
 
             gameMgr.MenuWin();

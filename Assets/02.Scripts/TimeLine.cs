@@ -56,8 +56,10 @@ public class TimeLine : MonoBehaviour
     {
         Debug.Log("처음부터 출근");
         //날짜 초기화
-        coinMgr.totalCoin = 18;
+        coinMgr.priCoin = coinMgr.fiCoin = 0;
         Days = 1;
+        coinMgr.totalCoin = 48;
+        coinMgr.TodayMyCoin();
         Today.text = Days + "일";
         StartCoroutine("BlindEF");
     }
@@ -98,6 +100,7 @@ public class TimeLine : MonoBehaviour
         {
             //인벤토리 정산관련 함수
             Calculate();
+            yield return new WaitForSecondsRealtime(6.0f);
         }
                               
         if (Days > LastDay || coinMgr.totalCoin < 0)
@@ -109,7 +112,7 @@ public class TimeLine : MonoBehaviour
             //근무 마지막날이 지났다
             Debug.Log("에필로그 또는 게임오버 호출!!");
             //Days = 1;
-            StopAllCoroutines();
+            //StopAllCoroutines();
             EventMgr.EpilogOn();
         }
         else if (Days == 1 || Days == LastSave)
@@ -121,7 +124,8 @@ public class TimeLine : MonoBehaviour
             StopCoroutine("BlindEF");
         }else
         {
-            yield return new WaitForSecondsRealtime(1);
+            //yield return new WaitForSecondsRealtime(1);
+            StopCoroutine("BlindEF");
         }
     }
 
@@ -133,10 +137,11 @@ public class TimeLine : MonoBehaviour
 
     IEnumerator WiteCalculate()
     {
-        BlindOff(); //블라인드 끄기
-
+        BlindOn();
+        Debug.Log("당일 근무평가 시작!");
         interaction.MasterIn();
         interaction.InterTxt2.text = "전달서류 처리중";
+        BlindWin.SetActive(false); //블라인드 끄기
         guildMaster.EmptySlot(); //상위부서에서 서류처리
         yield return new WaitForSecondsRealtime(1.8f);
 
@@ -152,10 +157,13 @@ public class TimeLine : MonoBehaviour
         invenSlot.UseSlotUpdate(); //소지한 서류검사
         yield return new WaitForSecondsRealtime(2.0f);
 
-        BlindOff();
+        interaction.LobbyOut();
+
+        BlindOn();
         WorkData.SetActive(true); //근무 평가표
         coinMgr.TodayTotal();
 
+        Debug.Log("당일 근무평가 완료!");
         StopCoroutine("WiteCalculate");
     }
 

@@ -20,23 +20,34 @@ public class Interaction : MonoBehaviour
     public GameObject GBWin; //퀘스트보드
     public GameObject MasterWin; //상급부서
 
+    public GameObject titleBGM; //타이틀 배경음
+    public GameObject lobbyBGM; //로비 배경음
+    public GameObject onclickm; //클릭효과음
+
     void Start()
     {
+        titleBGM.SetActive(true);
+
         WhereTxt.text = "길드 출근";
         InterWinMgr(0); //화면 창 정리
     }
 
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            Onclickm();
+        }
+
         //상호 작용 NPC 클릭
         if (Input.GetKeyDown(KeyCode.Mouse0) && isLobby != false)
-        {
+        {            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
                 //Debug.Log(hit.collider.name + "에 맞았다!!");
-                
+
                 if (hit.collider != null)
                 {
                     switch (hit.collider.gameObject.tag)
@@ -76,6 +87,11 @@ public class Interaction : MonoBehaviour
 
             }
         }
+    }
+
+    public void Onclickm()
+    {
+        Instantiate(onclickm);
     }
 
     public void InterWinMgr(int InterWin)
@@ -174,6 +190,9 @@ public class Interaction : MonoBehaviour
         WhereTxt.text = "길드 로비";
         
         InterWinMgr(1); //로비로 등장
+
+        lobbyBGM.SetActive(true);
+        titleBGM.SetActive(false);
     }
     public void LobbyOut()
     { //길드로비 초기화 클릭오류 방지
@@ -209,14 +228,14 @@ public class Interaction : MonoBehaviour
         WhereTxt.text = "[게시판]";
         InterWinMgr(5);
         InterTxt.text = WhereTxt.text;
-        InterTxt2.text = "주요업무 : 퀘스트보드 정리!";
+        InterTxt2.text = "퀘스트보드를 관리합니다.";
     }
 
     //길드 마스터
     public void MasterIn()
     {
         Debug.Log("Master에 입장");
-        WhereTxt.text = "상위 부서";
+        WhereTxt.text = "상급 부서";
         InterWinMgr(6);
         InterTxt.text = WhereTxt.text;
         InterTxt2.text = "남은 서류는 모두 이곳으로!";
@@ -229,7 +248,7 @@ public class Interaction : MonoBehaviour
         WhereTxt.text = "퇴근해?";
         InterWinMgr(2);
         InterTxt.text = WhereTxt.text;
-        InterTxt2.text = "퇴근전, 근무일지는 써야지!!";
+        InterTxt2.text = "근무일지로 기록을 남기세요!";
         
     }
 }

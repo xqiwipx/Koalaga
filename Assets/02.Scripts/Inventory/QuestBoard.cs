@@ -65,6 +65,7 @@ public class QuestBoard : MonoBehaviour
             {
                 case "Empty": //빈칸
                     slot.SetItem(itemBuffer.items[6]);
+                    Instantiate(bookCart.itemnull);
                     coinMgr.PriCoin(1); //기본 급료
                     break;
 
@@ -72,11 +73,13 @@ public class QuestBoard : MonoBehaviour
                     if (j < 1)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        Instantiate(bookCart.itemnull);
                         coinMgr.PriCoin(5);
                     }
                     else if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[5]);
+                        Instantiate(bookCart.itemset);
                         coinMgr.PriCoin(2);
                     }
                     else
@@ -89,11 +92,13 @@ public class QuestBoard : MonoBehaviour
                     if (j < 1)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        Instantiate(bookCart.itemnull);
                         coinMgr.PriCoin(3);
                     }
                     else if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[1]);
+                        Instantiate(bookCart.itemset);
                         coinMgr.PriCoin(1);
                     }
                     else
@@ -107,6 +112,7 @@ public class QuestBoard : MonoBehaviour
                     if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[0]); //반복 퀘스트 마감
+                        Instantiate(bookCart.itemnull);
                         coinMgr.PriCoin(7);
                     }
                     coinMgr.PriCoin(Random.Range(0, j * 5)); //수수료 랜덤
@@ -116,11 +122,13 @@ public class QuestBoard : MonoBehaviour
                     if (isMQ == true)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        Instantiate(bookCart.itemnull);
                         coinMgr.PriCoin(10);
                     }
                     else if (j > 1)
                     {
                         slot.SetItem(itemBuffer.items[5]); //벌금
+                        Instantiate(bookCart.itemset);
                         coinMgr.FiCoin(10);
                     }
                     else
@@ -133,6 +141,7 @@ public class QuestBoard : MonoBehaviour
                     if (isMQ == true)
                     {
                         slot.SetItem(itemBuffer.items[0]);
+                        Instantiate(bookCart.itemnull);
                         coinMgr.PriCoin(3);
                     }
                     else
@@ -185,6 +194,7 @@ public class QuestBoard : MonoBehaviour
             {
                 cartSlot.SetItem(QuestSlot.item);
                 QuestSlot.SetItem(itemBuffer.items[0]);
+                Instantiate(bookCart.itemset);
             }
         }
         StopCoroutine("WiteGetDown");
@@ -213,6 +223,7 @@ public class QuestBoard : MonoBehaviour
             {
                 QuestSlot.SetItem(cartSlot.item);
                 cartSlot.SetItem(itemBuffer.items[0]);
+                Instantiate(bookCart.itemset);
             }
         }
         StopCoroutine("WiteQuestNotice");
@@ -244,10 +255,13 @@ public class QuestBoard : MonoBehaviour
                 if (QuestSlot.item == itemBuffer.items[6])
                 {
                     QuestSlot.SetItem(itemBuffer.items[0]);
-                }else if(cartSlot != null)
+                    Instantiate(bookCart.itemnull);
+                }
+                else if(cartSlot != null)
                 {
                     cartSlot.SetItem(QuestSlot.item);
                     QuestSlot.SetItem(itemBuffer.items[0]);
+                    Instantiate(bookCart.itemset);
                 }
             } 
 

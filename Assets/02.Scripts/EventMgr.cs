@@ -11,6 +11,9 @@ public class EventMgr : MonoBehaviour
 
     public GameObject EventWin;
 
+    public GameObject gmaeOverBGM; //게임오버 배경음
+    public GameObject lobbyBGM; //로비 배경음
+
     void Start()
     {
 
@@ -43,6 +46,9 @@ public class EventMgr : MonoBehaviour
     {
         isEventOn = true; //이벤트창 활성화
         Epilog.SetActive(true);
+
+        gmaeOverBGM.SetActive(true);
+        lobbyBGM.SetActive(false);
     }
 
     public void EpilogOff()

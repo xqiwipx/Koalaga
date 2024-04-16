@@ -29,6 +29,10 @@ public class GameMgr : MonoBehaviour
 
     public EventMgr eventMgr;
 
+    public GameObject titleBGM; //타이틀 배경음
+    public GameObject lobbyBGM; //로비 배경음
+    public GameObject gmaeOverBGM; //로비 배경음
+
     void Start() //타이틀씬은 여기서 편집한다.
     {
         if (SceneManager.GetActiveScene().name == "00_Main")
@@ -105,6 +109,9 @@ public class GameMgr : MonoBehaviour
 
         //EventMgr.EventWin.SetActive(false);
 
+        titleBGM.SetActive(true);
+        lobbyBGM.SetActive(false);
+        gmaeOverBGM.SetActive(false);
     }
 
     public void Startmenu() //시작하기 메뉴

@@ -61,6 +61,7 @@ public class ViceMaster : MonoBehaviour
             {
                 int j = Random.Range(0, 6);
                 emptySlot.SetItem(itemBuffer.items[j]);
+                Instantiate(bookCart.itemset);
             }
         }
         StopCoroutine("WiteNowItem");
@@ -89,6 +90,7 @@ public class ViceMaster : MonoBehaviour
             {
                 cartSlot.SetItem(itemSlot.item);
                 itemSlot.SetItem(itemBuffer.items[0]);
+                Instantiate(bookCart.itemset);
             }
         }
         StopCoroutine("WaitGetAll");
@@ -117,6 +119,7 @@ public class ViceMaster : MonoBehaviour
             {
                 cartSlot.SetItem(itemSlot.item);
                 itemSlot.SetItem(itemBuffer.items[0]);
+                Instantiate(bookCart.itemset);
             }
         }
         StopCoroutine("WiteQuestGet");

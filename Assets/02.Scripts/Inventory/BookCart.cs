@@ -18,6 +18,9 @@ public class BookCart : MonoBehaviour
     public CoinMgr coinMgr;
     public QuestBoard questBoard;
 
+    public GameObject itemset; //효과음
+    public GameObject itemnull; //효과음
+
     void Start()
     {
         coinMgr = GameObject.Find("GameMgr").GetComponent<CoinMgr>();
@@ -56,6 +59,7 @@ public class BookCart : MonoBehaviour
         for (int i = 0; i < slotRoot.childCount; i++)
         {
             yield return new WaitForSecondsRealtime(0.1f);
+
             //대상슬롯은 i번째 슬롯의 컨포넌트 
             var slot = slotRoot.GetChild(i).GetComponent<SlotC>();
 
@@ -67,6 +71,7 @@ public class BookCart : MonoBehaviour
                     if (questBoard.isMQ != true && j < 1)
                     {
                         slot.SetItem(itemBuffer.items[5]);
+                        Instantiate(itemset);
                     }
 
                     break;
@@ -87,6 +92,7 @@ public class BookCart : MonoBehaviour
                     if (questBoard.isMQ != true && j < 1)
                     {
                         slot.SetItem(itemBuffer.items[5]);
+                        Instantiate(itemset);
                         coinMgr.FiCoin(10);
                     }
 
@@ -95,7 +101,7 @@ public class BookCart : MonoBehaviour
                 case "Quest_N": //취급 불가
                     if (questBoard.isMQ != true && j < 1)
                     {
-                        slot.SetItem(itemBuffer.items[6]);
+                        //slot.SetItem(itemBuffer.items[6]);
                         coinMgr.FiCoin(5);
                     }
                     break;

@@ -8,7 +8,7 @@ public class InvenSlot : MonoBehaviour
     public ItemBuffer itemBuffer; //아이템 리스트
     public Transform slotRoot; //슬롯 틀?
 
-    public BookCart board; //서류 카트
+    public BookCart bookCart; //서류 카트
 
     private List<SlotC> slots; //슬롯 리스트
 
@@ -21,9 +21,13 @@ public class InvenSlot : MonoBehaviour
     public bool clickOk = true; //클릭허용
     public OptionItem optionItem; //서류이동관련
 
+    //public GameObject gameObject; //효과음
+
     void Start()
     {
         coinMgr = GameObject.Find("GameMgr").GetComponent<CoinMgr>();
+
+        bookCart = GameObject.Find("ItemBuffer").GetComponent<BookCart>();
 
         questBoard = GameObject.Find("ItemBuffer").GetComponent<QuestBoard>();
 
@@ -43,7 +47,7 @@ public class InvenSlot : MonoBehaviour
         slots.Add(slot);
 
         //선택아이템을 사용중표시
-        board.onSlotClick = PickItem;
+        bookCart.onSlotClick = PickItem;
 
         Pitem = itemBuffer.items[0]; //넣을 아이템 초기화
     }
@@ -75,14 +79,16 @@ public class InvenSlot : MonoBehaviour
             if (slot == null || slot.item.name == "Quest_O")
             {
                 //Debug.Log(slot.item.name + " 여기서 처리?");
-                board.onSlotClick(itemBuffer.items[0]);
+                bookCart.onSlotClick(itemBuffer.items[0]);
 
                 Sitem = itemBuffer.items[0];
+                Instantiate(bookCart.itemnull);
 
             }
             else
             {
-                board.onSlotClick(slot.item);
+                bookCart.onSlotClick(slot.item);
+                Instantiate(bookCart.itemset);
 
                 Sitem = slot.item; //슬롯 선택
             }
