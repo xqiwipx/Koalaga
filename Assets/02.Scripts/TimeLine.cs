@@ -11,6 +11,7 @@ public class TimeLine : MonoBehaviour
 
     public int LastDay = 3; //최종 근무일 설정 
     int LastSave = 1; //근무일지 마지막 작성일
+    int LastCoin = 50; //근무일지 마지막 코인
 
 
     //외부 호출
@@ -69,12 +70,17 @@ public class TimeLine : MonoBehaviour
         //바로 출근 연결
         Days = LastSave; //저장된 근무날짜
         Today.text = Days + "일";
+        coinMgr.priCoin = coinMgr.fiCoin = 0;
+        coinMgr.totalCoin = LastCoin;
+        coinMgr.TodayMyCoin();
         StartCoroutine("BlindEF");
     }
 
     public void Save() //세이브 관련
     {
         LastSave = Days; //근무 당일 세이브
+        LastCoin = coinMgr.myCoin;
+        
         NextDay();
     }
 
